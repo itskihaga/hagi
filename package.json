@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "bin": {
-    "hagi": "bin/hagi"
+    "hg": "bin/hagi"
   },
   "scripts": {},
   "keywords": [],
@@ -16,9 +16,7 @@
   },
   "dependencies": {
     "@types/prompts": "^2.0.8",
-    "fp-ts": "^2.8.2",
     "inquirer": "^7.3.3",
-    "io-ts": "^2.2.10",
     "prompts": "^2.3.2",
     "simple-git": "^2.20.1"
   }
