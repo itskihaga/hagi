@@ -1,0 +1,16 @@
+  
+{
+    "ts-node": {
+        "transpileOnly": true
+    },
+    "compilerOptions": {
+        "strict": true,
+        // "target": "ESNEXT",                    /* ｔｓを書くときにどのversionのESが対象か: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */
+        // "module": "ESNEXT",    
+        "esModuleInterop": true,               /* ES6 ModuleとCommonJS間でモジュールの差分を埋めるためのコードを追加する */
+        /* Module Resolution Options */
+        "moduleResolution": "node", 
+        "lib": [ "es2015","dom"],
+        "outDir": "build"
+    }
+}

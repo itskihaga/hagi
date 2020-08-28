@@ -1,0 +1,25 @@
+{
+  "name": "hagi",
+  "version": "1.0.0",
+  "description": "",
+  "bin": {
+    "hagi": "bin/hagi"
+  },
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/inquirer": "^7.3.1",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "@types/prompts": "^2.0.8",
+    "fp-ts": "^2.8.2",
+    "inquirer": "^7.3.3",
+    "io-ts": "^2.2.10",
+    "prompts": "^2.3.2",
+    "simple-git": "^2.20.1"
+  }
+}
