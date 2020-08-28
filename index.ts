@@ -92,7 +92,7 @@ const fn = async () => {
         case "delete":
             return deleteBranch();
         default:
-            throw new Error(cmd)
+            throw new Error()
     }
 };
 fn().catch(() => {})
