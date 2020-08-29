@@ -8,7 +8,8 @@ export const run = async () => {
         return;
     }
     const choices : Choice[] = stashes.all.map((stash,index) => ({
-        title:formatDateAndMsg(stash),
+        title:`stash@{${index}}`,
+        description:formatDateAndMsg(stash),
         value:index
     }))
     const { number } = await prompts([
