@@ -11,7 +11,7 @@ export const run = async () => {
     }
     const { branch } = await prompts([
         {
-            type: "select",
+            type: "autocomplete",
             name: "branch",
             message: "Pick a branch!",
             choices
