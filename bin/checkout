@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require("../build/src/scripts/checkout").run()
+require("../build/scripts/checkout").run()

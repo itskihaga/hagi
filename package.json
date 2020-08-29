@@ -5,7 +5,8 @@
   "bin": {
     "gch": "bin/checkout",
     "gnw": "bin/new",
-    "gdl": "bin/delete"
+    "gdl": "bin/delete",
+    "gpu": "bin/push"
   },
   "scripts": {},
   "keywords": [],

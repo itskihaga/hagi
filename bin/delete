@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require("../build/src/scripts/delete").run()
+require("../build/scripts/delete").run()
