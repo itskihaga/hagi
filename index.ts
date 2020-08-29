@@ -1,18 +1,31 @@
 import simpleGit from "simple-git";
 import prompts from "prompts";
+import { program } from "commander";
+import { getLogger } from "log4js";
+const logger = getLogger("git")
+logger.level = "debug"
 
-const git = simpleGit().outputHandler((_, stdout, stderr) => {
+program
+    .option('-d, --debug', 'output extra debugging')
+    .parse(process.argv);
+
+const debug = program.debug as boolean
+
+const git = simpleGit().outputHandler((cmd, stdout, stderr, args) => {
+    debug && logger.debug([cmd, ...args].join(" "))
     stdout.pipe(process.stdout)
     stderr.pipe(process.stderr)
 })
-const gitWithoutStdout = simpleGit();
-
+const gitWithoutStdout = simpleGit().outputHandler((cmd, _, stderr, args) => {
+    debug && logger.debug([cmd, ...args].join(" "))
+    stderr.pipe(process.stderr)
+})
 const checkout = async () => {
-    const {all,current} = await gitWithoutStdout.branch(["--sort=-committerdate"]);
+    const { all, current } = await gitWithoutStdout.branch(["--sort=-committerdate"]);
     const choices = all
         .filter(e => e != current)
-        .map(e => ({title:e,value:e}))
-    if(!choices.length){
+        .map(e => ({ title: e, value: e }))
+    if (!choices.length) {
         console.log("No branch to checkout")
         return;
     }
@@ -20,13 +33,11 @@ const checkout = async () => {
         {
             type: "select",
             name: "branch",
-            message:"Pick a branch!",
+            message: "Pick a branch!",
             choices
         }
     ]);
-    if(branch){
-        git.checkout([branch]);
-    }
+    branch && git.checkout([branch]);
 }
 
 const newBranch = async () => {
@@ -37,17 +48,15 @@ const newBranch = async () => {
             name: "name"
         }
     ]);
-    if(name){
-        git.checkoutLocalBranch(name);
-    }
+    name && git.checkoutLocalBranch(name);
 }
 
 const deleteBranch = async () => {
-    const {all,current} = await gitWithoutStdout.branchLocal();
+    const { all, current } = await gitWithoutStdout.branchLocal();
     const choices = all
         .filter(e => e != current)
-        .map(e => ({title:e,value:e}))
-    if(!choices.length){
+        .map(e => ({ title: e, value: e }))
+    if (!choices.length) {
         console.log("No branch to delete")
         return;
     }
@@ -59,9 +68,7 @@ const deleteBranch = async () => {
             choices
         }
     ]);
-    if(branches.length){
-        git.deleteLocalBranches(branches,true)
-    }
+    branches.length && git.deleteLocalBranches(branches, true)
 }
 
 const fn = async () => {
@@ -71,16 +78,16 @@ const fn = async () => {
         message: 'Command?',
         choices: [
             {
-                title:"checkout branch",
-                value:"checkout"
+                title: "checkout branch",
+                value: "checkout"
             },
             {
-                title:"new branch",
-                value:"new"
+                title: "new branch",
+                value: "new"
             },
             {
-                title:"delete branches",
-                value:"delete"
+                title: "delete branches",
+                value: "delete"
             }
         ]
     })
@@ -95,6 +102,6 @@ const fn = async () => {
             throw new Error()
     }
 };
-fn().catch(() => {})
+fn().catch(() => { })
 
 
