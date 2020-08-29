@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "bin": {
-    "hg": "bin/hagi"
+    "gch": "bin/checkout",
+    "gnw": "bin/new",
+    "gdl": "bin/delete"
   },
   "scripts": {},
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/lodash": "^4.14.161",
     "@types/log4js": "^2.3.5",
     "@types/prompts": "^2.0.8",
     "ts-node": "^9.0.0",
@@ -17,6 +20,7 @@
   },
   "dependencies": {
     "commander": "^6.1.0",
+    "lodash": "^4.17.20",
     "log4js": "^6.3.0",
     "prompts": "^2.3.2",
     "simple-git": "^2.20.1"
