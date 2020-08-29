@@ -1,5 +1,5 @@
-import simpleGit from "simple-git";
-import prompts from "prompts";
+import simpleGit, { BranchSummary } from "simple-git";
+import prompts, { Choice } from "prompts";
 import { program } from "commander";
 import { getLogger } from "log4js";
 const logger = getLogger("git")
@@ -20,11 +20,23 @@ const gitWithoutStdout = simpleGit().outputHandler((cmd, _, stderr, args) => {
     debug && logger.debug([cmd, ...args].join(" "))
     stderr.pipe(process.stderr)
 })
+
+const branchesToChoices = ({ all, current }:BranchSummary):Promise<Choice[]> => {
+    return Promise.all(
+        all
+            .filter(branch => branch != current)
+            .map((branch) => [branch, gitWithoutStdout.log({ from: branch })] as const)
+            .map(([branch, promise]) => promise.then(log => ({ 
+                title: branch,
+                value: branch, 
+                description: `[${log.latest.date}] ${log.latest.message}`
+            })))
+    )
+}
+
 const checkout = async () => {
-    const { all, current } = await gitWithoutStdout.branch(["--sort=-committerdate"]);
-    const choices = all
-        .filter(e => e != current)
-        .map(e => ({ title: e, value: e }))
+    const summary = await gitWithoutStdout.branch(["--sort=-committerdate"]);
+    const choices = await branchesToChoices(summary)
     if (!choices.length) {
         console.log("No branch to checkout")
         return;
@@ -52,10 +64,8 @@ const newBranch = async () => {
 }
 
 const deleteBranch = async () => {
-    const { all, current } = await gitWithoutStdout.branchLocal();
-    const choices = all
-        .filter(e => e != current)
-        .map(e => ({ title: e, value: e }))
+    const summary = await gitWithoutStdout.branchLocal();
+    const choices = await branchesToChoices(summary)
     if (!choices.length) {
         console.log("No branch to delete")
         return;
