@@ -8,7 +8,7 @@ export const run = async () => {
         const [res] = cur.split("/").reduce<[string[],string | null]>(([acc,prev],cur) => 
             [
                 prev ? [...acc,prev ] : acc , 
-                prev ? prev + "/" + cur : cur
+                prev ? prev + cur + "/" : cur + "/"
             ]
         ,[[],null])
         return acc.concat(res);
@@ -24,7 +24,7 @@ export const run = async () => {
                  {title:"-- none --",value:NONE_VALUE},
             ],
         }
-    ]) : {directory:null}
+    ]) : {directory:NONE_VALUE}
     if(!directory){
         return;
     }
@@ -35,5 +35,5 @@ export const run = async () => {
             name: "name",
         }
     ]);
-    name && git.checkoutLocalBranch(directory !== NONE_VALUE ? directory + "/" + name : name);
+    name && git.checkoutLocalBranch(directory !== NONE_VALUE ? directory + name : name);
 }
