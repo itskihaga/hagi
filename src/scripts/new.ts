@@ -13,7 +13,7 @@ export const run = async () => {
         ,[[],null])
         return acc.concat(res);
     },[]))
-    const { directory } = await prompts([
+    const { directory } = sujests.length ? await prompts([
         {
             type: "select",
             message: "Directory?",
@@ -23,7 +23,7 @@ export const run = async () => {
                  ...sujests.map(suj => ({title:suj,value:suj}))
             ]
         }
-    ]);
+    ]) : {directory:null}
     const { name } = await prompts([
         {
             type: "text",
