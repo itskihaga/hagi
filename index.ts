@@ -71,7 +71,7 @@ const fn = async () => {
         message: 'Command?',
         choices: [
             {
-                title:"checkout",
+                title:"checkout branch",
                 value:"checkout"
             },
             {
@@ -79,7 +79,7 @@ const fn = async () => {
                 value:"new"
             },
             {
-                title:"delete",
+                title:"delete branches",
                 value:"delete"
             }
         ]
