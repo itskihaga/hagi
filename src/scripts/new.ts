@@ -13,6 +13,7 @@ export const run = async () => {
         ,[[],null])
         return acc.concat(res);
     },[]))
+    const NONE_VALUE = "-"
     const { directory } = sujests.length ? await prompts([
         {
             type: "select",
@@ -20,7 +21,7 @@ export const run = async () => {
             name: "directory",
             choices: [
                  ...sujests.map(suj => ({title:suj,value:suj})),
-                 {title:"-- none --",value:"-"},
+                 {title:"-- none --",value:NONE_VALUE},
             ],
         }
     ]) : {directory:null}
@@ -30,9 +31,9 @@ export const run = async () => {
     const { name } = await prompts([
         {
             type: "text",
-            message: directory !== "-" ? `Branch name? [${directory}]` : "Branch name?",
+            message: directory !== NONE_VALUE ? `Branch name? [${directory}]` : "Branch name?",
             name: "name",
         }
     ]);
-    name && git.checkoutLocalBranch(directory !== "-" ? directory + "/" + name : name);
+    name && git.checkoutLocalBranch(directory !== NONE_VALUE ? directory + "/" + name : name);
 }
