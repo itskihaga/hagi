@@ -27,7 +27,11 @@ export const branchesToChoices = ({ all, current }:BranchSummary):Promise<Choice
             .map(([branch, promise]) => promise.then(log => ({ 
                 title: branch,
                 value: branch, 
-                description: `[${log.latest.date}] ${log.latest.message}`
+                description: formatDateAndMsg(log.latest)
             })))
     )
+}
+
+export const formatDateAndMsg = ({date,message}:{date:string,message:string}):string => {
+    return `[${date}] ${message}`
 }

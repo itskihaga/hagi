@@ -6,7 +6,8 @@
     "gch": "bin/checkout",
     "gnw": "bin/new",
     "gdl": "bin/delete",
-    "gpu": "bin/push"
+    "gpu": "bin/push",
+    "gsp": "bin/popStash"
   },
   "scripts": {},
   "keywords": [],

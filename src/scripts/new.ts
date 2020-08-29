@@ -19,8 +19,8 @@ export const run = async () => {
             message: "Directory?",
             name: "directory",
             choices: [
-                {title:"-- none --",value:null},
-                 ...sujests.map(suj => ({title:suj,value:suj}))
+                 ...sujests.map(suj => ({title:suj,value:suj})),
+                 {title:"-- none --",value:null},
             ]
         }
     ]) : {directory:null}
