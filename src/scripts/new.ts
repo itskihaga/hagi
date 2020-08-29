@@ -20,16 +20,19 @@ export const run = async () => {
             name: "directory",
             choices: [
                  ...sujests.map(suj => ({title:suj,value:suj})),
-                 {title:"-- none --",value:null},
-            ]
+                 {title:"-- none --",value:"-"},
+            ],
         }
     ]) : {directory:null}
+    if(!directory){
+        return;
+    }
     const { name } = await prompts([
         {
             type: "text",
-            message: directory ? `Branch name? [${directory}]` : "Branch name?",
+            message: directory !== "-" ? `Branch name? [${directory}]` : "Branch name?",
             name: "name",
         }
     ]);
-    name && git.checkoutLocalBranch(directory ? directory + "/" + name : name);
+    name && git.checkoutLocalBranch(directory !== "-" ? directory + "/" + name : name);
 }
