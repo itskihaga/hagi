@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require("../build/scripts/new").run()
+require("../build/scripts/" + require("path").basename(__filename)).run()

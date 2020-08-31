@@ -7,7 +7,10 @@
     "gnw": "bin/new",
     "gdl": "bin/delete",
     "gpu": "bin/push",
-    "gsp": "bin/popStash"
+    "gsp": "bin/popStash",
+    "gcm": "bin/commit",
+    "gst": "bin/status",
+    "gad": "bin/add"
   },
   "scripts": {},
   "keywords": [],

@@ -23,7 +23,9 @@ export const branchesToChoices = ({ all, current }:BranchSummary):Promise<Choice
     return Promise.all(
         all
             .filter(branch => branch != current)
-            .map((branch) => [branch, gitWithoutStdout.log({ from: branch })] as const)
+            .map((branch) => [branch, gitWithoutStdout.log({ 
+                from: branch + "^", to: branch,"--no-merges":null
+            })] as const)
             .map(([branch, promise]) => promise.then(log => ({ 
                 title: branch,
                 value: branch, 
@@ -32,6 +34,8 @@ export const branchesToChoices = ({ all, current }:BranchSummary):Promise<Choice
     )
 }
 
-export const formatDateAndMsg = ({date,message}:{date:string,message:string}):string => {
-    return `[${date}] ${message}`
+export const formatDateAndMsg = ({date,body,message}:{date:string,body:string,message:string}):string => {
+    return body ? `[${date}] ${message} 
+        ${body}
+    ` : `[${date}] ${message}`
 }
