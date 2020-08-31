@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require("../build/scripts/" + require("path").basename(__filename)).run()
+require("child_process").spawn("git", process.argv.slice(2).length ? ["commit", "-m", ...process.argv.slice(2)] : ["commit"], { stdio: 'inherit' })
