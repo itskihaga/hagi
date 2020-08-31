@@ -1,18 +1,18 @@
-import { git,gitWithoutStdout } from "../common"
+import { git, gitSilent } from "../common"
 import _ from "lodash"
 import prompts from "prompts";
 
 export const run = async () => {
-    const summary = await gitWithoutStdout.branchLocal()
-    const sujests = _.uniq(summary.all.reduce<string[]>((acc,cur) => {
-        const [res] = cur.split("/").reduce<[string[],string | null]>(([acc,prev],cur) => 
+    const summary = await gitSilent.branchLocal()
+    const sujests = _.uniq(summary.all.reduce<string[]>((acc, cur) => {
+        const [res] = cur.split("/").reduce<[string[], string | null]>(([acc, prev], cur) =>
             [
-                prev ? [...acc,prev ] : acc , 
-                prev ? prev + cur + "/" : cur + "/"
+                prev ? [...acc, prev] : acc,
+                (prev || "") + cur + "/"
             ]
-        ,[[],null])
+            , [[], null])
         return acc.concat(res);
-    },[]))
+    }, []))
     const NONE_VALUE = "-"
     const { directory } = sujests.length ? await prompts([
         {
@@ -20,12 +20,12 @@ export const run = async () => {
             message: "Directory?",
             name: "directory",
             choices: [
-                 ...sujests.map(suj => ({title:suj,value:suj})),
-                 {title:"-- none --",value:NONE_VALUE},
+                ...sujests.map(suj => ({ title: suj, value: suj })),
+                { title: "-- none --", value: NONE_VALUE },
             ],
         }
-    ]) : {directory:NONE_VALUE}
-    if(!directory){
+    ]) : { directory: NONE_VALUE }
+    if (!directory) {
         return;
     }
     const { name } = await prompts([

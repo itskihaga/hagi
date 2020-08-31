@@ -1,8 +1,8 @@
-import { gitWithoutStdout, git, formatDateAndMsg } from "../common"
+import { gitSilent, git, formatDateAndMsg } from "../common"
 import prompts, { Choice } from "prompts"
 
 export const run = async () => {
-    const stashes = await gitWithoutStdout.stashList()
+    const stashes = await gitSilent.stashList()
     if(!stashes.total){
         console.log("No stash to pop");
         return;

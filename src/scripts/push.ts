@@ -1,7 +1,7 @@
 
-import { gitWithoutStdout, git } from "../common"
+import { gitSilent, git } from "../common"
 
 export const run = async () => {
-    const {current} = await gitWithoutStdout.status()
+    const {current} = await gitSilent.status()
     current && git.push("origin",current)
 }

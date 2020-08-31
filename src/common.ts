@@ -14,7 +14,7 @@ export const git = simpleGit().outputHandler((cmd, stdout, stderr, args) => {
     stdout.pipe(process.stdout)
     stderr.pipe(process.stderr)
 })
-export const gitWithoutStdout = simpleGit().outputHandler((cmd, _, stderr, args) => {
+export const gitSilent = simpleGit().outputHandler((cmd, _, stderr, args) => {
     logger.debug([cmd, ...args].join(" "))
     stderr.pipe(process.stderr)
 })
@@ -23,7 +23,7 @@ export const branchesToChoices = ({ all, current }:BranchSummary):Promise<Choice
     return Promise.all(
         all
             .filter(branch => branch != current)
-            .map((branch) => [branch, gitWithoutStdout.log({ 
+            .map((branch) => [branch, gitSilent.log({ 
                 from: branch + "^", to: branch,"--no-merges":null
             })] as const)
             .map(([branch, promise]) => promise.then(log => ({ 
