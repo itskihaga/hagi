@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require("child_process").spawn("git", process.argv.slice(2).length ? ["commit", "-m", ...process.argv.slice(2)] : ["commit"], { stdio: 'inherit' })
+require("child_process").spawn("git", process.argv.slice(2).length ? ["commit", "-m", process.argv.slice(2).join(" ")] : ["commit"], { stdio: 'inherit' })
